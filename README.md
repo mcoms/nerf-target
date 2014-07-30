@@ -1,6 +1,6 @@
 # Nerf Target
 
-A physical target for Nerf bullets or other soft projectiles, which I used to skip Spotify on the @wearefriday office jukebox.
+A physical target for Nerf bullets or other soft projectiles, which I used to skip Spotify on the [@wearefriday](https://github.com/wearefriday) office jukebox.
 
 Powered by [Arduino](http://www.arduino.cc/) and [Ruby](https://www.ruby-lang.org/), although any language that can access a serial port will work.
 
@@ -79,3 +79,32 @@ To process it, connect to the serial port at 9600 baud, and wait for a line begi
 #### Time
 
 You can use the time to figure out if you've already processed that hit, or the number of milliseconds between hits. It's the number of milliseconds since the Arduino board began running the current program. This number will overflow (go back to zero), after approximately 50 days, so bear in mind that it could go down as well as up.
+
+## Skipping Spotify
+
+This target can be used to trigger anything. We used it [@wearefriday](https://github.com/wearefriday) to skip Spotify on the office jukebox.
+
+### An example client in Ruby
+
+I've provided a [very basic Ruby client](ruby/nerf-target.rb) for the target using the [SerialPort gem](https://github.com/hparra/ruby-serialport/). It uses AppleScript to skip Spotify, so only works on OSX. That was fine by us, but you could easily extend it to work for you.
+
+#### Usage
+
+```
+$ bundle install
+$ ruby nerf-target.rb /dev/tty.usbserial-A6008k35 
+I, [2014-07-30T12:07:50.828619 #3501]  INFO -- : Trying /dev/tty.usbserial-A6008k35...
+I, [2014-07-30T12:07:50.832633 #3501]  INFO -- : Listening on /dev/tty.usbserial-A6008k35.
+D, [2014-07-30T12:07:52.221687 #3501] DEBUG -- : Received: Nerf Target v0.0.1, github.com/mcoms/nerf-target, 2014.
+D, [2014-07-30T12:07:56.891676 #3501] DEBUG -- : Received: NP,4706,18
+I, [2014-07-30T12:07:56.891831 #3501]  INFO -- : Hit at 4706 with force 18.
+I, [2014-07-30T12:07:57.858570 #3501]  INFO -- : Skipping Spotify.
+D, [2014-07-30T12:07:57.858676 #3501] DEBUG -- : Ignoring hits until 11:08:06 UTC.
+D, [2014-07-30T12:08:02.185334 #3501] DEBUG -- : Received: NP,10012,38
+I, [2014-07-30T12:08:02.185506 #3501]  INFO -- : Hit at 10012 with force 38.
+D, [2014-07-30T12:08:02.185546 #3501] DEBUG -- : Ignoring this hit.
+```
+
+## Contributing
+
+I'd love to hear about fun uses of this project, and welcome PRs to improve.
